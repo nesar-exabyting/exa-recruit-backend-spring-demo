@@ -1,6 +1,6 @@
-package com.exabyting.exa_recruit.repository.postgres;
+package com.exabyting.exa_recruit.repository.mysql;
 
-import com.exabyting.exa_recruit.entity.postgres.Admin;
+import com.exabyting.exa_recruit.entity.mysql.Admin;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

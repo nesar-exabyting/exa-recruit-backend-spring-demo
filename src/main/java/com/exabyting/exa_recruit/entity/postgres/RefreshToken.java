@@ -5,15 +5,24 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.Instant;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "admins")
-public class Admin {
+public class RefreshToken {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    @Column(name = "token_id")
+    private Integer id;
 
-    String name;
+    @Column(nullable = false)
+    private String token;
+
+    @Column(nullable = false)
+    private Instant expiryDate;
+
+    @OneToOne
+    private User user;
 }

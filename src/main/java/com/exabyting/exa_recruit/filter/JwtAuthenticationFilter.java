@@ -1,4 +1,4 @@
-package com.exabyting.exa_recruit.filters;
+package com.exabyting.exa_recruit.filter;
 
 import com.exabyting.exa_recruit.service.JwtService;
 import jakarta.servlet.FilterChain;

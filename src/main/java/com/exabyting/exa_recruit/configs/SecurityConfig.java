@@ -1,6 +1,6 @@
 package com.exabyting.exa_recruit.configs;
 
-import com.exabyting.exa_recruit.filters.JwtAuthenticationFilter;
+import com.exabyting.exa_recruit.filter.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;

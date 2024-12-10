@@ -1,7 +1,9 @@
 package com.exabyting.exa_recruit.configs;
 
 import jakarta.persistence.EntityManagerFactory;
+import liquibase.integration.spring.SpringLiquibase;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.liquibase.LiquibaseProperties;
 import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
@@ -35,6 +37,31 @@ public class PostgresDataSourceConfig {
     @ConfigurationProperties(prefix = "spring.jpa.postgres")
     public JpaProperties postgresJpaProperties() {
         return new JpaProperties();
+    }
+
+    @Bean(name = "postgresLiquibaseProperties")
+    @ConfigurationProperties(prefix = "spring.liquibase.postgres")
+    public LiquibaseProperties liquibaseProperties() {
+        return new LiquibaseProperties();
+    }
+
+    @Bean(name = "postgresLiquibase")
+    public SpringLiquibase liquibase(@Qualifier("postgresDataSource") DataSource dataSource,
+                                     @Qualifier("postgresLiquibaseProperties") LiquibaseProperties properties) {
+        return createLiquibaseBean(dataSource, properties);
+    }
+
+    private SpringLiquibase createLiquibaseBean(DataSource dataSource, LiquibaseProperties properties) {
+        SpringLiquibase liquibase = new SpringLiquibase();
+        liquibase.setDataSource(dataSource);
+        liquibase.setChangeLog(properties.getChangeLog());
+        if (properties.getContexts() != null && !properties.getContexts().isEmpty()) {
+            liquibase.setContexts(String.join(",", properties.getContexts()));
+        }
+        liquibase.setDefaultSchema(properties.getDefaultSchema());
+        liquibase.setDropFirst(properties.isDropFirst());
+        liquibase.setShouldRun(properties.isEnabled());
+        return liquibase;
     }
 
     @Bean(name = "postgresEntityManagerFactory")

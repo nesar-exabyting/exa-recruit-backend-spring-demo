@@ -1,7 +1,9 @@
 package com.exabyting.exa_recruit.configs;
 
 import jakarta.persistence.EntityManagerFactory;
+import liquibase.integration.spring.SpringLiquibase;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.liquibase.LiquibaseProperties;
 import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
@@ -38,6 +40,33 @@ public class MysqlDataSourceConfig {
     @ConfigurationProperties(prefix = "spring.jpa.mysql")
     public JpaProperties mysqlJpaProperties() {
         return new JpaProperties();
+    }
+
+    @Primary
+    @Bean(name = "mysqlLiquibaseProperties")
+    @ConfigurationProperties(prefix = "spring.liquibase.mysql")
+    public LiquibaseProperties liquibaseProperties() {
+        return new LiquibaseProperties();
+    }
+
+    @Primary
+    @Bean(name = "mysqlLiquibase")
+    public SpringLiquibase liquibase(@Qualifier("mysqlDataSource") DataSource dataSource,
+                                     @Qualifier("mysqlLiquibaseProperties") LiquibaseProperties properties) {
+        return createLiquibaseBean(dataSource, properties);
+    }
+
+    private SpringLiquibase createLiquibaseBean(DataSource dataSource, LiquibaseProperties properties) {
+        SpringLiquibase liquibase = new SpringLiquibase();
+        liquibase.setDataSource(dataSource);
+        liquibase.setChangeLog(properties.getChangeLog());
+        if (properties.getContexts() != null && !properties.getContexts().isEmpty()) {
+            liquibase.setContexts(String.join(",", properties.getContexts()));
+        }
+        liquibase.setDefaultSchema(properties.getDefaultSchema());
+        liquibase.setDropFirst(properties.isDropFirst());
+        liquibase.setShouldRun(properties.isEnabled());
+        return liquibase;
     }
 
     @Primary

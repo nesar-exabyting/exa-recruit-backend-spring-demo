@@ -2,6 +2,7 @@ package com.exabyting.exa_recruit.configs;
 
 import jakarta.persistence.EntityManagerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
@@ -14,8 +15,6 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
-import java.util.HashMap;
-import java.util.Map;
 
 @Configuration
 @EnableTransactionManagement
@@ -32,24 +31,22 @@ public class PostgresDataSourceConfig {
         return DataSourceBuilder.create().build();
     }
 
+    @Bean(name = "postgresJpaProperties")
+    @ConfigurationProperties(prefix = "spring.jpa.postgres")
+    public JpaProperties postgresJpaProperties() {
+        return new JpaProperties();
+    }
+
     @Bean(name = "postgresEntityManagerFactory")
     public LocalContainerEntityManagerFactoryBean postgresEntityManagerFactory(
-            @Qualifier("postgresDataSource") DataSource dataSource, EntityManagerFactoryBuilder builder) {
+            @Qualifier("postgresDataSource") DataSource dataSource, EntityManagerFactoryBuilder builder,
+            @Qualifier("postgresJpaProperties") JpaProperties jpaProperties) {
         return builder
                 .dataSource(dataSource)
                 .packages("com.exabyting.exa_recruit.entity.postgres")
                 .persistenceUnit("postgresPU")
-                .properties(postgresJpaProperties())
+                .properties(jpaProperties.getProperties())
                 .build();
-    }
-
-    private Map<String, Object> postgresJpaProperties() {
-        Map<String, Object> properties = new HashMap<>();
-        properties.put("hibernate.hbm2ddl.auto", "create-drop");
-        properties.put("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
-        properties.put("hibernate.show_sql", "true");
-        properties.put("hibernate.format_sql", "true");
-        return properties;
     }
 
     @Bean(name = "postgresTransactionManager")

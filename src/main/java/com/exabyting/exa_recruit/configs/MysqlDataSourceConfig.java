@@ -2,6 +2,7 @@ package com.exabyting.exa_recruit.configs;
 
 import jakarta.persistence.EntityManagerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
@@ -15,8 +16,6 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
-import java.util.HashMap;
-import java.util.Map;
 
 @Configuration
 @EnableTransactionManagement
@@ -35,24 +34,23 @@ public class MysqlDataSourceConfig {
     }
 
     @Primary
+    @Bean(name = "mysqlJpaProperties")
+    @ConfigurationProperties(prefix = "spring.jpa.mysql")
+    public JpaProperties mysqlJpaProperties() {
+        return new JpaProperties();
+    }
+
+    @Primary
     @Bean(name = "mysqlEntityManagerFactory")
     public LocalContainerEntityManagerFactoryBean mysqlEntityManagerFactory(
-            @Qualifier("mysqlDataSource") DataSource dataSource, EntityManagerFactoryBuilder builder) {
+            @Qualifier("mysqlDataSource") DataSource dataSource, EntityManagerFactoryBuilder builder,
+            @Qualifier("mysqlJpaProperties") JpaProperties jpaProperties) {
         return builder
                 .dataSource(dataSource)
                 .packages("com.exabyting.exa_recruit.entity.mysql")
                 .persistenceUnit("mysqlPU")
-                .properties(mysqlJpaProperties())
+                .properties(jpaProperties.getProperties())
                 .build();
-    }
-
-    private Map<String, Object> mysqlJpaProperties() {
-        Map<String, Object> properties = new HashMap<>();
-        properties.put("hibernate.hbm2ddl.auto", "create-drop");
-        properties.put("hibernate.dialect", "org.hibernate.dialect.MySQL8Dialect");
-        properties.put("hibernate.show_sql", "true");
-        properties.put("hibernate.format_sql", "true");
-        return properties;
     }
 
     @Primary

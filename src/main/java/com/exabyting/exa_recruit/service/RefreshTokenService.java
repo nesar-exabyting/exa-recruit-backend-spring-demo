@@ -1,9 +1,9 @@
 package com.exabyting.exa_recruit.service;
 
-import com.exabyting.exa_recruit.entity.postgres.RefreshToken;
-import com.exabyting.exa_recruit.entity.postgres.User;
-import com.exabyting.exa_recruit.repository.postgres.RefreshTokenRepository;
-import com.exabyting.exa_recruit.repository.postgres.UserRepository;
+import com.exabyting.exa_recruit.entity.exarecruitdb.RefreshToken;
+import com.exabyting.exa_recruit.entity.exarecruitdb.User;
+import com.exabyting.exa_recruit.repository.exarecruitdb.RefreshTokenRepository;
+import com.exabyting.exa_recruit.repository.exarecruitdb.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;

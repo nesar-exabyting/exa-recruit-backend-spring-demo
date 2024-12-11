@@ -1,4 +1,4 @@
-package com.exabyting.exa_recruit.entity.postgres;
+package com.exabyting.exa_recruit.entity.exarecruitdb;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

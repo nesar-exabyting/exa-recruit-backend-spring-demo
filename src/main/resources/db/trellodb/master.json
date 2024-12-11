@@ -2,7 +2,7 @@
   "databaseChangeLog": [
     {
       "includeAll": {
-        "path": "db/mysql/changelogs"
+        "path": "db/trellodb/changelogs"
       }
     }
   ]

@@ -2,9 +2,9 @@ package com.exabyting.exa_recruit.service;
 
 import com.exabyting.exa_recruit.dto.ResponseDto;
 import com.exabyting.exa_recruit.dto.UserDto;
-import com.exabyting.exa_recruit.entity.postgres.User;
+import com.exabyting.exa_recruit.entity.exarecruitdb.User;
 import com.exabyting.exa_recruit.enums.UserRole;
-import com.exabyting.exa_recruit.repository.postgres.UserRepository;
+import com.exabyting.exa_recruit.repository.exarecruitdb.UserRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;

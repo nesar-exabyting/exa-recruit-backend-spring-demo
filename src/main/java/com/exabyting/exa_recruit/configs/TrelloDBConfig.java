@@ -22,37 +22,37 @@ import javax.sql.DataSource;
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(
-        basePackages = "com.exabyting.exa_recruit.repository.mysql",
-        entityManagerFactoryRef = "mysqlEntityManagerFactory",
-        transactionManagerRef = "mysqlTransactionManager"
+        basePackages = "com.exabyting.exa_recruit.repository.trellodb",
+        entityManagerFactoryRef = "trellodbEntityManagerFactory",
+        transactionManagerRef = "trellodbTransactionManager"
 )
-public class MysqlDataSourceConfig {
+public class TrelloDBConfig {
 
     @Primary
-    @Bean(name = "mysqlDataSource")
-    @ConfigurationProperties(prefix = "spring.datasource.mysql")
-    public DataSource mysqlDataSource() {
+    @Bean(name = "trellodbDataSource")
+    @ConfigurationProperties(prefix = "spring.datasource.trellodb")
+    public DataSource trellodbDataSource() {
         return DataSourceBuilder.create().build();
     }
 
     @Primary
-    @Bean(name = "mysqlJpaProperties")
-    @ConfigurationProperties(prefix = "spring.jpa.mysql")
-    public JpaProperties mysqlJpaProperties() {
+    @Bean(name = "trellodbJpaProperties")
+    @ConfigurationProperties(prefix = "spring.jpa.trellodb")
+    public JpaProperties trellodbJpaProperties() {
         return new JpaProperties();
     }
 
     @Primary
-    @Bean(name = "mysqlLiquibaseProperties")
-    @ConfigurationProperties(prefix = "spring.liquibase.mysql")
+    @Bean(name = "trellodbLiquibaseProperties")
+    @ConfigurationProperties(prefix = "spring.liquibase.trellodb")
     public LiquibaseProperties liquibaseProperties() {
         return new LiquibaseProperties();
     }
 
     @Primary
-    @Bean(name = "mysqlLiquibase")
-    public SpringLiquibase liquibase(@Qualifier("mysqlDataSource") DataSource dataSource,
-                                     @Qualifier("mysqlLiquibaseProperties") LiquibaseProperties properties) {
+    @Bean(name = "trellodbLiquibase")
+    public SpringLiquibase liquibase(@Qualifier("trellodbDataSource") DataSource dataSource,
+                                     @Qualifier("trellodbLiquibaseProperties") LiquibaseProperties properties) {
         return createLiquibaseBean(dataSource, properties);
     }
 
@@ -70,22 +70,22 @@ public class MysqlDataSourceConfig {
     }
 
     @Primary
-    @Bean(name = "mysqlEntityManagerFactory")
-    public LocalContainerEntityManagerFactoryBean mysqlEntityManagerFactory(
-            @Qualifier("mysqlDataSource") DataSource dataSource, EntityManagerFactoryBuilder builder,
-            @Qualifier("mysqlJpaProperties") JpaProperties jpaProperties) {
+    @Bean(name = "trellodbEntityManagerFactory")
+    public LocalContainerEntityManagerFactoryBean trellodbEntityManagerFactory(
+            @Qualifier("trellodbDataSource") DataSource dataSource, EntityManagerFactoryBuilder builder,
+            @Qualifier("trellodbJpaProperties") JpaProperties jpaProperties) {
         return builder
                 .dataSource(dataSource)
-                .packages("com.exabyting.exa_recruit.entity.mysql")
-                .persistenceUnit("mysqlPU")
+                .packages("com.exabyting.exa_recruit.entity.trellodb")
+                .persistenceUnit("trellodbPU")
                 .properties(jpaProperties.getProperties())
                 .build();
     }
 
     @Primary
-    @Bean(name = "mysqlTransactionManager")
-    public PlatformTransactionManager mysqlTransactionManager(
-            @Qualifier("mysqlEntityManagerFactory") EntityManagerFactory entityManagerFactory) {
+    @Bean(name = "trellodbTransactionManager")
+    public PlatformTransactionManager trellodbTransactionManager(
+            @Qualifier("trellodbEntityManagerFactory") EntityManagerFactory entityManagerFactory) {
         return new JpaTransactionManager(entityManagerFactory);
     }
 }

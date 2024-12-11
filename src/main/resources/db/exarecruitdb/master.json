@@ -2,7 +2,7 @@
   "databaseChangeLog": [
     {
       "includeAll": {
-        "path": "db/postgres/changelogs"
+        "path": "db/exarecruitdb/changelogs"
       }
     }
   ]

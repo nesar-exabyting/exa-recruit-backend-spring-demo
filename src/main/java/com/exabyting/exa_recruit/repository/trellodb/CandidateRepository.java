@@ -1,6 +1,6 @@
-package com.exabyting.exa_recruit.repository.mysql;
+package com.exabyting.exa_recruit.repository.trellodb;
 
-import com.exabyting.exa_recruit.entity.mysql.Candidate;
+import com.exabyting.exa_recruit.entity.trellodb.Candidate;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

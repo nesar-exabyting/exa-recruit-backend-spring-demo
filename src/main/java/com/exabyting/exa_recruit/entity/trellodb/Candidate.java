@@ -1,4 +1,4 @@
-package com.exabyting.exa_recruit.entity.mysql;
+package com.exabyting.exa_recruit.entity.trellodb;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

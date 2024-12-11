@@ -21,33 +21,33 @@ import javax.sql.DataSource;
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(
-        basePackages = "com.exabyting.exa_recruit.repository.postgres",
-        entityManagerFactoryRef = "postgresEntityManagerFactory",
-        transactionManagerRef = "postgresTransactionManager"
+        basePackages = "com.exabyting.exa_recruit.repository.exarecruitdb",
+        entityManagerFactoryRef = "exarecruitdbEntityManagerFactory",
+        transactionManagerRef = "exarecruitdbTransactionManager"
 )
-public class PostgresDataSourceConfig {
+public class ExaRecruitDBConfig {
 
-    @Bean(name = "postgresDataSource")
-    @ConfigurationProperties(prefix = "spring.datasource.postgres")
-    public DataSource postgresDataSource() {
+    @Bean(name = "exarecruitdbDataSource")
+    @ConfigurationProperties(prefix = "spring.datasource.exarecruitdb")
+    public DataSource exarecruitdbDataSource() {
         return DataSourceBuilder.create().build();
     }
 
-    @Bean(name = "postgresJpaProperties")
-    @ConfigurationProperties(prefix = "spring.jpa.postgres")
-    public JpaProperties postgresJpaProperties() {
+    @Bean(name = "exarecruitdbJpaProperties")
+    @ConfigurationProperties(prefix = "spring.jpa.exarecruitdb")
+    public JpaProperties exarecruitdbJpaProperties() {
         return new JpaProperties();
     }
 
-    @Bean(name = "postgresLiquibaseProperties")
-    @ConfigurationProperties(prefix = "spring.liquibase.postgres")
+    @Bean(name = "exarecruitdbLiquibaseProperties")
+    @ConfigurationProperties(prefix = "spring.liquibase.exarecruitdb")
     public LiquibaseProperties liquibaseProperties() {
         return new LiquibaseProperties();
     }
 
-    @Bean(name = "postgresLiquibase")
-    public SpringLiquibase liquibase(@Qualifier("postgresDataSource") DataSource dataSource,
-                                     @Qualifier("postgresLiquibaseProperties") LiquibaseProperties properties) {
+    @Bean(name = "exarecruitdbLiquibase")
+    public SpringLiquibase liquibase(@Qualifier("exarecruitdbDataSource") DataSource dataSource,
+                                     @Qualifier("exarecruitdbLiquibaseProperties") LiquibaseProperties properties) {
         return createLiquibaseBean(dataSource, properties);
     }
 
@@ -64,21 +64,21 @@ public class PostgresDataSourceConfig {
         return liquibase;
     }
 
-    @Bean(name = "postgresEntityManagerFactory")
-    public LocalContainerEntityManagerFactoryBean postgresEntityManagerFactory(
-            @Qualifier("postgresDataSource") DataSource dataSource, EntityManagerFactoryBuilder builder,
-            @Qualifier("postgresJpaProperties") JpaProperties jpaProperties) {
+    @Bean(name = "exarecruitdbEntityManagerFactory")
+    public LocalContainerEntityManagerFactoryBean exarecruitdbEntityManagerFactory(
+            @Qualifier("exarecruitdbDataSource") DataSource dataSource, EntityManagerFactoryBuilder builder,
+            @Qualifier("exarecruitdbJpaProperties") JpaProperties jpaProperties) {
         return builder
                 .dataSource(dataSource)
-                .packages("com.exabyting.exa_recruit.entity.postgres")
-                .persistenceUnit("postgresPU")
+                .packages("com.exabyting.exa_recruit.entity.exarecruitdb")
+                .persistenceUnit("exarecruitdbPU")
                 .properties(jpaProperties.getProperties())
                 .build();
     }
 
-    @Bean(name = "postgresTransactionManager")
-    public PlatformTransactionManager postgresTransactionManager(
-            @Qualifier("postgresEntityManagerFactory") EntityManagerFactory entityManagerFactory) {
+    @Bean(name = "exarecruitdbTransactionManager")
+    public PlatformTransactionManager exarecruitdbTransactionManager(
+            @Qualifier("exarecruitdbEntityManagerFactory") EntityManagerFactory entityManagerFactory) {
         return new JpaTransactionManager(entityManagerFactory);
     }
 }

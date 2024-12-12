@@ -1,9 +1,9 @@
 package com.exabyting.exa_recruit.service;
 
-import com.exabyting.exa_recruit.dto.exarecruitdb.ResponseDto;
-import com.exabyting.exa_recruit.dto.exarecruitdb.UserDto;
+import com.exabyting.exa_recruit.dto.exarecruitdb.ResponseDTO;
+import com.exabyting.exa_recruit.dto.exarecruitdb.UserDTO;
 import com.exabyting.exa_recruit.entity.exarecruitdb.User;
-import com.exabyting.exa_recruit.enums.UserRole;
+import com.exabyting.exa_recruit.constant.enums.UserRole;
 import com.exabyting.exa_recruit.repository.exarecruitdb.UserRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,13 +33,13 @@ public class AuthenticationService {
         this.refreshTokenService = refreshTokenService;
     }
 
-    public boolean invalidUserDto(UserDto userDto) {
+    public boolean invalidUserDto(UserDTO userDto) {
         if(userDto.getUsername() == null || userDto.getUsername().isEmpty()) return true;
         if(userDto.getPassword() == null || userDto.getPassword().isEmpty()) return true;
         return false;
     }
 
-    public ResponseEntity<?> register(UserDto userDto, UserRole role) {
+    public ResponseEntity<?> register(UserDTO userDto, UserRole role) {
         Map<String, Object> response = new HashMap<>();
 
         if (invalidUserDto(userDto)) {
@@ -63,7 +63,7 @@ public class AuthenticationService {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    public ResponseEntity<?> login(UserDto userDto) {
+    public ResponseEntity<?> login(UserDTO userDto) {
         Map<String, Object> response = new HashMap<>();
 
         if (invalidUserDto(userDto)){
@@ -89,7 +89,7 @@ public class AuthenticationService {
         String jwtToken = jwtService.generateToken(user);
         String refreshToken = refreshTokenService.generateRefreshToken(user.getUsername());
 
-        ResponseDto responseDto = new ResponseDto(jwtToken, refreshToken, user.getRole());
+        ResponseDTO responseDto = new ResponseDTO(jwtToken, refreshToken, user.getRole());
         return new ResponseEntity<>(responseDto, HttpStatus.CREATED);
     }
 

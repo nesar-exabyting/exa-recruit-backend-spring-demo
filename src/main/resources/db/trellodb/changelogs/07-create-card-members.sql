@@ -11,3 +11,4 @@ CREATE TABLE card_members (
     FOREIGN KEY (card_id) REFERENCES cards(id),
     FOREIGN KEY (member_id) REFERENCES members(id)
 );
+-- rollback DROP TABLE card_members;

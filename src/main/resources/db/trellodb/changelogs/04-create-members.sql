@@ -11,3 +11,4 @@ CREATE TABLE members (
     PRIMARY KEY (id),
     FOREIGN KEY (board_id) REFERENCES boards(id)
 );
+-- rollback DROP TABLE members;

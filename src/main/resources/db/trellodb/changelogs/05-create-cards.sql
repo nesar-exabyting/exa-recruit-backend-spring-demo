@@ -16,3 +16,4 @@ CREATE TABLE cards (
     FOREIGN KEY (board_id) REFERENCES boards(id),
     FOREIGN KEY (list_id) REFERENCES trello_lists(id)
 );
+-- rollback DROP TABLE cards;

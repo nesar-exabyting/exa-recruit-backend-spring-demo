@@ -1,5 +1,6 @@
 package com.exabyting.exa_recruit.entity.trellodb;
 
+import com.exabyting.exa_recruit.constant.db.TrelloDbConstant.DbLabel;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -8,31 +9,31 @@ import java.util.List;
 
 @Data
 @Entity
-@Table(name = "labels")
+@Table(name = DbLabel.TABLE_NAME)
 public class Label {
     @Id
-    @Column(name = "id")
+    @Column(name = DbLabel.ID)
     private String id;
 
     @ManyToOne
-    @JoinColumn(name = "board_id")
+    @JoinColumn(name = DbLabel.BOARD_ID)
     private Board board;
 
-    @ManyToMany(mappedBy = "labels")
+    @ManyToMany(mappedBy = DbLabel.LABELS_RELATIONSHIP_FIELD)
     private List<Card> cards;
 
-    @Column(name = "name")
+    @Column(name = DbLabel.NAME)
     private String name;
 
-    @Column(name = "color")
+    @Column(name = DbLabel.COLOR)
     private String color;
 
-    @Column(name = "uses")
+    @Column(name = DbLabel.USES)
     private Integer uses;
 
-    @Column(name = "created_at")
+    @Column(name = DbLabel.CREATED_AT)
     private Date createdAt;
 
-    @Column(name = "updated_at")
+    @Column(name = DbLabel.UPDATED_AT)
     private Date updatedAt;
 }

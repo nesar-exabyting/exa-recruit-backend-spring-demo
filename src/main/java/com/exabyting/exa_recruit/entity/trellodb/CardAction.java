@@ -1,5 +1,6 @@
 package com.exabyting.exa_recruit.entity.trellodb;
 
+import com.exabyting.exa_recruit.constant.db.TrelloDbConstant.DbCardAction;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -7,48 +8,48 @@ import java.util.Date;
 
 @Data
 @Entity
-@Table(name = "card_actions")
+@Table(name = DbCardAction.TABLE_NAME)
 public class CardAction {
     @Id
-    @Column(name = "id")
+    @Column(name = DbCardAction.ID)
     private String id;
 
     @ManyToOne
-    @JoinColumn(name = "creator_member_id")
+    @JoinColumn(name = DbCardAction.CREATOR_MEMBER_ID)
     private Member member;
 
-    @Column(name = "text")
+    @Column(name = DbCardAction.TEXT)
     private String text;
 
     @ManyToOne
-    @JoinColumn(name = "board_id")
+    @JoinColumn(name = DbCardAction.BOARD_ID)
     private Board board;
 
     @ManyToOne
-    @JoinColumn(name = "card_id")
+    @JoinColumn(name = DbCardAction.CARD_ID)
     private Card card;
 
     @ManyToOne
-    @JoinColumn(name = "list_id")
+    @JoinColumn(name = DbCardAction.LIST_ID)
     private TrelloList trelloList;
 
     @ManyToOne
-    @JoinColumn(name = "before_list_id")
+    @JoinColumn(name = DbCardAction.BEFORE_LIST_ID)
     private TrelloList beforeTrelloList;
 
     @ManyToOne
-    @JoinColumn(name = "after_list_id")
+    @JoinColumn(name = DbCardAction.AFTER_LIST_ID)
     private TrelloList afterTrelloList;
 
-    @Column(name = "type")
+    @Column(name = DbCardAction.TYPE)
     private String type;
 
-    @Column(name = "date")
+    @Column(name = DbCardAction.DATE)
     private Date date;
 
-    @Column(name = "created_at")
+    @Column(name = DbCardAction.CREATED_AT)
     private Date createdAt;
 
-    @Column(name = "updated_at")
+    @Column(name = DbCardAction.UPDATED_AT)
     private Date updatedAt;
 }

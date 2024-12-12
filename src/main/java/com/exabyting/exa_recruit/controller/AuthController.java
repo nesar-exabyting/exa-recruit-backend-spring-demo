@@ -1,8 +1,8 @@
 package com.exabyting.exa_recruit.controller;
 
-import com.exabyting.exa_recruit.dto.exarecruitdb.RefreshDto;
-import com.exabyting.exa_recruit.dto.exarecruitdb.UserDto;
-import com.exabyting.exa_recruit.enums.UserRole;
+import com.exabyting.exa_recruit.dto.exarecruitdb.RefreshDTO;
+import com.exabyting.exa_recruit.dto.exarecruitdb.UserDTO;
+import com.exabyting.exa_recruit.constant.enums.UserRole;
 import com.exabyting.exa_recruit.service.AuthenticationService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,22 +20,22 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> getLogin(@RequestBody UserDto userDto) {
+    public ResponseEntity<?> getLogin(@RequestBody UserDTO userDto) {
         return authenticationService.login(userDto);
     }
 
     @PostMapping("/refresh")
-    public ResponseEntity<?> getJwtToken(@RequestBody RefreshDto refreshDto) {
+    public ResponseEntity<?> getJwtToken(@RequestBody RefreshDTO refreshDto) {
         return authenticationService.refresh(refreshDto.getRefreshToken());
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> postRegister(@RequestBody UserDto userDto) {
+    public ResponseEntity<?> postRegister(@RequestBody UserDTO userDto) {
         return authenticationService.register(userDto, UserRole.USER);
     }
 
     @PostMapping("/admin/register")
-    public ResponseEntity<?> postAdminRegister(@RequestBody UserDto userDto) {
+    public ResponseEntity<?> postAdminRegister(@RequestBody UserDTO userDto) {
         return authenticationService.register(userDto, UserRole.ADMIN);
     }
 }

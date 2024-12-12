@@ -22,3 +22,4 @@ CREATE TABLE card_actions (
     FOREIGN KEY (before_list_id) REFERENCES trello_lists(id),
     FOREIGN KEY (after_list_id) REFERENCES trello_lists(id)
 );
+-- rollback DROP TABLE card_actions;

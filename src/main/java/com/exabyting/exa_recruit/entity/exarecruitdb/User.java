@@ -1,6 +1,6 @@
 package com.exabyting.exa_recruit.entity.exarecruitdb;
 
-import com.exabyting.exa_recruit.enums.UserRole;
+import com.exabyting.exa_recruit.constant.enums.UserRole;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,5 +1,6 @@
 package com.exabyting.exa_recruit.entity.trellodb;
 
+import com.exabyting.exa_recruit.constant.db.TrelloDbConstant.DbCardLabel;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -7,29 +8,29 @@ import java.util.Date;
 
 @Data
 @Entity
-@Table(name = "card_labels")
+@Table(name = DbCardLabel.TABLE_NAME)
 public class CardLabel {
     @Id
-    @Column(name = "id")
+    @Column(name = DbCardLabel.ID)
     private Long id;
 
-    @Column(name = "card_id")
+    @Column(name = DbCardLabel.CARD_ID)
     private String cardId;
 
-    @Column(name = "label_id")
+    @Column(name = DbCardLabel.LABEL_ID)
     private String labelId;
 
     @ManyToOne
-    @JoinColumn(name = "card_id", referencedColumnName = "id", insertable = false, updatable = false)
+    @JoinColumn(name = DbCardLabel.CARD_ID, referencedColumnName = DbCardLabel.ID, insertable = false, updatable = false)
     private Card card;
 
     @ManyToOne
-    @JoinColumn(name = "label_id", referencedColumnName = "id", insertable = false, updatable = false)
+    @JoinColumn(name = DbCardLabel.LABEL_ID, referencedColumnName = DbCardLabel.ID, insertable = false, updatable = false)
     private Label label;
 
-    @Column(name = "created_at")
+    @Column(name = DbCardLabel.CREATED_AT)
     private Date createdAt;
 
-    @Column(name = "updated_at")
+    @Column(name = DbCardLabel.UPDATED_AT)
     private Date updatedAt;
 }

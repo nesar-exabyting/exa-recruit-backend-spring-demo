@@ -1,7 +1,7 @@
 package com.exabyting.exa_recruit.controller;
 
-import com.exabyting.exa_recruit.dto.RefreshDto;
-import com.exabyting.exa_recruit.dto.UserDto;
+import com.exabyting.exa_recruit.dto.exarecruitdb.RefreshDto;
+import com.exabyting.exa_recruit.dto.exarecruitdb.UserDto;
 import com.exabyting.exa_recruit.enums.UserRole;
 import com.exabyting.exa_recruit.service.AuthenticationService;
 import org.springframework.http.ResponseEntity;

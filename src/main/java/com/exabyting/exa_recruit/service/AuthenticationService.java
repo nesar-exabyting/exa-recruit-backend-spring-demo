@@ -1,7 +1,7 @@
 package com.exabyting.exa_recruit.service;
 
-import com.exabyting.exa_recruit.dto.ResponseDto;
-import com.exabyting.exa_recruit.dto.UserDto;
+import com.exabyting.exa_recruit.dto.exarecruitdb.ResponseDto;
+import com.exabyting.exa_recruit.dto.exarecruitdb.UserDto;
 import com.exabyting.exa_recruit.entity.exarecruitdb.User;
 import com.exabyting.exa_recruit.enums.UserRole;
 import com.exabyting.exa_recruit.repository.exarecruitdb.UserRepository;
